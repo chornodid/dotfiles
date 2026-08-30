@@ -3,3 +3,4 @@
 -- config/keymaps.lua like everything else.
 
 vim.cmd.packadd("nvim.undotree")
+vim.cmd.packadd("matchit") -- extends % to jump if/elsif/else/end, def/end, etc.
