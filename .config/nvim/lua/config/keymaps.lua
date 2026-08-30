@@ -15,10 +15,6 @@ end
 
 iset("jj", "<ESC>", { silent = true })
 
--- Unused LazyVim default keymaps
-vim.keymap.del("n", "gco")
-vim.keymap.del("n", "gcO")
-
 --  Buffer Navigation
 nset("<leader>bn", ":bnext<CR>", { desc = "Next Buffer", silent = true })
 nset("<leader>bp", ":bprev<CR>", { desc = "Previous Buffer", silent = true })
