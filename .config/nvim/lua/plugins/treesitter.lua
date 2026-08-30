@@ -1,29 +1,13 @@
 return {
   {
     "nvim-treesitter/nvim-treesitter",
+    -- LazyVim core sets opts_extend = { "ensure_installed" }, so this list is
+    -- merged with (not a replacement for) its own list, not the full set of
+    -- installed parsers. Only list languages not already in LazyVim core's
+    -- default ensure_installed.
     opts = {
       ensure_installed = {
         "ruby",
-        "bash",
-        "diff",
-        "html",
-        "javascript",
-        "jsdoc",
-        "json",
-        "lua",
-        "luadoc",
-        "luap",
-        "markdown",
-        "markdown_inline",
-        "query",
-        "regex",
-        "toml",
-        "tsx",
-        "typescript",
-        "vim",
-        "vimdoc",
-        "xml",
-        "yaml",
       },
     },
   },
