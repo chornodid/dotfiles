@@ -49,9 +49,23 @@ function M.current_tab_loaded_file_buffers()
   return M.unique_list(loaded_file_buffers)
 end
 
+-- Find the git project root by walking up from the given absolute path.
+-- Matches ".git" as either a directory (regular clone) or a file
+-- (git worktree, which stores a "gitdir: ..." pointer instead), so
+-- worktrees resolve to their own root just like a regular checkout.
+local function find_git_root(path)
+  return vim.fs.root(path, ".git")
+end
+
 -- In Rails, find unit/integration test file for the current source file
 function M.find_test_file(type)
-  local current_relative_path = vim.fn.expand("%")
+  local current_full_path = vim.fn.expand("%:p")
+  local root = find_git_root(current_full_path)
+  if not root then
+    vim.notify("Could not find git root (.git) for the current file", vim.log.levels.ERROR)
+    return
+  end
+  local current_relative_path = current_full_path:sub(#root + 2)
   local test_relative_path = nil
 
   if not string.match(current_relative_path, ".rb$") then
@@ -69,10 +83,10 @@ function M.find_test_file(type)
   if not test_relative_path then
     return
   end
-  local file = io.open(test_relative_path, "r")
+  local test_full_path = root .. "/" .. test_relative_path
+  local file = io.open(test_full_path, "r")
   if file then
     file:close()
-    local test_full_path = vim.fn.getcwd() .. "/" .. test_relative_path
     return test_full_path
   else
     vim.notify("Was not able to find test file: " .. test_relative_path, vim.log.levels.WARN)
@@ -82,7 +96,13 @@ end
 
 -- In Rails, find source file for the current unit/integration test file
 function M.find_source_file_for_test_file()
-  local current_relative_path = vim.fn.expand("%")
+  local current_full_path = vim.fn.expand("%:p")
+  local root = find_git_root(current_full_path)
+  if not root then
+    vim.notify("Could not find git root (.git) for the current file", vim.log.levels.ERROR)
+    return
+  end
+  local current_relative_path = current_full_path:sub(#root + 2)
   local source_relative_path = nil
 
   if not string.match(current_relative_path, "^spec/.+_spec.rb$") then
@@ -98,21 +118,19 @@ function M.find_source_file_for_test_file()
   end
 
   -- try to find the file in app or lib directory
-  local app_relative_path = "app/" .. source_relative_path
-  local lib_relative_path = "lib/" .. source_relative_path
+  local app_full_path = root .. "/app/" .. source_relative_path
+  local lib_full_path = root .. "/lib/" .. source_relative_path
 
-  local file = io.open(app_relative_path, "r")
+  local file = io.open(app_full_path, "r")
   if file then
     file:close()
-    local source_full_path = vim.fn.getcwd() .. "/" .. app_relative_path
-    return source_full_path
+    return app_full_path
   end
 
-  file = io.open(lib_relative_path, "r")
+  file = io.open(lib_full_path, "r")
   if file then
     file:close()
-    local source_full_path = vim.fn.getcwd() .. "/" .. lib_relative_path
-    return source_full_path
+    return lib_full_path
   end
 
   vim.notify("Unable to find source file in Rails top dirs: " .. source_relative_path, vim.log.levels.WARN)
