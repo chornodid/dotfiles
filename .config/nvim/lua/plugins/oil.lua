@@ -7,6 +7,13 @@ return {
     config = function()
       require("oil").setup({
         use_default_keymaps = true,
+        keymaps = {
+          -- Disabled: single keystrokes, too easy to hit by accident while
+          -- browsing, and they silently change Neovim's cwd (` = :cd,
+          -- ~ = :tcd) which broke path-relative logic elsewhere in this config.
+          ["`"] = false,
+          ["~"] = false,
+        },
         -- keymaps = {
         --   -- default
         --   -- ["<CR>"] = "actions.select",
