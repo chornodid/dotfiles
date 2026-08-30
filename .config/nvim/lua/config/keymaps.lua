@@ -15,9 +15,6 @@ end
 
 iset("jj", "<ESC>", { silent = true })
 
--- Zoom only needs one key; drop the LazyVim default's second binding
-vim.keymap.del("n", "<leader>wm")
-
 --  Buffer Navigation
 nset("<leader>bn", ":bnext<CR>", { desc = "Next Buffer", silent = true })
 nset("<leader>bp", ":bprev<CR>", { desc = "Previous Buffer", silent = true })
