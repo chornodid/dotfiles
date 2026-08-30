@@ -10,11 +10,7 @@ return {
     end,
   },
   config = function(_, opts)
-    -- Set fold settings
-    vim.o.foldcolumn = "1"
-    vim.o.foldlevel = 99
-    vim.o.foldlevelstart = 99
-    vim.o.foldenable = true
+    -- Fold settings (foldcolumn, foldlevel, foldlevelstart, foldenable) are set globally in config/options.lua
 
     local fold_virt_text_handler = function(virtText, lnum, endLnum, width, truncate)
       local newVirtText = {}
