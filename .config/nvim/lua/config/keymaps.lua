@@ -15,6 +15,13 @@ end
 
 iset("jj", "<ESC>", { silent = true })
 
+-- Undo tree (bundled with Neovim, opt-in via :packadd since it's not a
+-- separate plugin lazy.nvim manages)
+nset("<leader>uu", function()
+  vim.cmd.packadd("nvim.undotree")
+  require("undotree").open()
+end, { desc = "Undo Tree" })
+
 --  Buffer Navigation
 nset("<leader>bn", ":bnext<CR>", { desc = "Next Buffer", silent = true })
 nset("<leader>bp", ":bprev<CR>", { desc = "Previous Buffer", silent = true })
