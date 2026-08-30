@@ -23,7 +23,10 @@ function M.loaded_file_buffers()
   local loaded_file_buffers = {}
 
   for _, buf_number in ipairs(buffers) do
-    if vim.api.nvim_buf_is_loaded(buf_number) and vim.api.nvim_buf_get_option(buf_number, "buftype") == "" then
+    if
+      vim.api.nvim_buf_is_loaded(buf_number)
+      and vim.api.nvim_get_option_value("buftype", { buf = buf_number }) == ""
+    then
       table.insert(loaded_file_buffers, buf_number)
     end
   end
@@ -38,7 +41,7 @@ function M.current_tab_loaded_file_buffers()
 
   for _, win in ipairs(current_tab_windows) do
     local buf_number = vim.api.nvim_win_get_buf(win)
-    if vim.api.nvim_buf_get_option(buf_number, "buftype") == "" then
+    if vim.api.nvim_get_option_value("buftype", { buf = buf_number }) == "" then
       table.insert(loaded_file_buffers, buf_number)
     end
   end
