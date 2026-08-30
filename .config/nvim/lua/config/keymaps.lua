@@ -2,6 +2,8 @@
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
 
+require("config.packages")
+
 local km = vim.keymap
 local nset = function(...)
   km.set("n", ...)
@@ -15,12 +17,8 @@ end
 
 iset("jj", "<ESC>", { silent = true })
 
--- Undo tree (bundled with Neovim, opt-in via :packadd since it's not a
--- separate plugin lazy.nvim manages)
-nset("<leader>uu", function()
-  vim.cmd.packadd("nvim.undotree")
-  require("undotree").open()
-end, { desc = "Undo Tree" })
+-- Undo tree (activated in config/packages.lua)
+nset("<leader>uu", "<cmd>Undotree<cr>", { desc = "Undo Tree" })
 
 --  Buffer Navigation
 nset("<leader>bn", ":bnext<CR>", { desc = "Next Buffer", silent = true })
