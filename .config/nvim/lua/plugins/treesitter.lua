@@ -31,8 +31,8 @@ return {
     keys = {
       { "]n", "<cmd>Treewalker Down<cr>", desc = "Next Node", mode = { "n", "v" } },
       { "[n", "<cmd>Treewalker Up<cr>", desc = "Previous Node", mode = { "n", "v" } },
-      { "<leader>cj", "<cmd>Treewalker SwapDown<cr>", desc = "Swap Down", mode = { "n", "v" } },
-      { "<leader>ck", "<cmd>Treewalker SwapUp<cr>", desc = "Swap Up", mode = { "n", "v" } },
+      { "<leader>cj", "<cmd>Treewalker SwapDown<cr>", desc = "Swap Node Down", mode = { "n", "v" } },
+      { "<leader>ck", "<cmd>Treewalker SwapUp<cr>", desc = "Swap Node Up", mode = { "n", "v" } },
     },
   },
 }
