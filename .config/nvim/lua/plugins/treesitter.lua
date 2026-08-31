@@ -23,4 +23,16 @@ return {
       { "<leader>tj", "<Cmd>TSJJoin<CR>", desc = "Treesj: Join Node Under Cursor" },
     },
   },
+
+  -- Navigate/swap treesitter nodes (siblings), regardless of language
+  {
+    "aaronik/treewalker.nvim",
+    opts = { highlight = true },
+    keys = {
+      { "]n", "<cmd>Treewalker Down<cr>", desc = "Next Node", mode = { "n", "v" } },
+      { "[n", "<cmd>Treewalker Up<cr>", desc = "Previous Node", mode = { "n", "v" } },
+      { "<leader>cj", "<cmd>Treewalker SwapDown<cr>", desc = "Swap Down", mode = { "n", "v" } },
+      { "<leader>ck", "<cmd>Treewalker SwapUp<cr>", desc = "Swap Up", mode = { "n", "v" } },
+    },
+  },
 }
