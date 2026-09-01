@@ -31,8 +31,18 @@ return {
     keys = {
       { "]n", "<cmd>Treewalker Down<cr>", desc = "Next Node", mode = { "n", "v" } },
       { "[n", "<cmd>Treewalker Up<cr>", desc = "Previous Node", mode = { "n", "v" } },
-      { "<leader>cj", "<cmd>Treewalker SwapDown<cr>", desc = "Swap Node Down", mode = { "n", "v" } },
-      { "<leader>ck", "<cmd>Treewalker SwapUp<cr>", desc = "Swap Node Up", mode = { "n", "v" } },
+      { "<leader>rj", "<cmd>Treewalker SwapDown<cr>", desc = "Swap Node Down", mode = { "n", "v" } },
+      { "<leader>rk", "<cmd>Treewalker SwapUp<cr>", desc = "Swap Node Up", mode = { "n", "v" } },
+    },
+  },
+
+  -- which-key group label for the new <leader>r namespace above
+  {
+    "folke/which-key.nvim",
+    opts = {
+      spec = {
+        { "<leader>r", group = "restructure" },
+      },
     },
   },
 }
