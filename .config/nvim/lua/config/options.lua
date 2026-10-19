@@ -26,3 +26,19 @@ vg.loaded_node_provider = 0
 vg.loaded_perl_provider = 0
 vg.loaded_python3_provider = 0
 vg.loaded_ruby_provider = 0
+
+-- Over SSH, LazyVim leaves the system clipboard alone. Copy to the local machine's clipboard via
+-- OSC 52 anyway, but paste from Neovim's own register: terminals like Alacritty refuse OSC 52 reads,
+-- which would make every `p` hang. Paste from the local clipboard with the terminal's paste key.
+if vim.env.SSH_TTY then
+  local osc52 = require("vim.ui.clipboard.osc52")
+  local function paste()
+    return { vim.fn.split(vim.fn.getreg(""), "\n"), vim.fn.getregtype("") }
+  end
+  vg.clipboard = {
+    name = "OSC 52 (copy only)",
+    copy = { ["+"] = osc52.copy("+"), ["*"] = osc52.copy("*") },
+    paste = { ["+"] = paste, ["*"] = paste },
+  }
+  opt.clipboard = "unnamedplus"
+end
